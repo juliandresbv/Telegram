@@ -175,6 +175,14 @@ android {
     flavorDimensions "minApi"
 
     productFlavors {
+        /* WinOS Comp:
+        Compilation CPU architectures:
+        As a compilation optimization, it is recommended to block-comment those "flavors" that does
+        NOT match the CPU architecture of your Android device (either physical or emulator device).
+        (Googling the technical specifications of your device might give you a clue about the CPU
+        architecture of your device).
+        */
+
         armv7 {
             ndk {
                 abiFilters "armeabi-v7a"
@@ -291,7 +299,13 @@ android {
     def tgVoipDexFileName = "libtgvoip.dex"
     def tgVoipDexClasses = ["AudioRecordJNI", "AudioTrackJNI", "NativeTgVoipDelegate", "NativeTgVoipInstance", "TgVoipNativeLoader", "Resampler", "VLog"]
     def tgVoipDexClassesPath = "org/telegram/messenger/voip"
-    def dxUtilPath = "${sdkDirectory.path}/build-tools/${buildToolsVersion}/dx"
+
+    /* WinOS Comp:
+    dx:
+    Add the extension .bat at the end of the "dxUtilPath" string variable. Since, for WindowsOS
+    the executable files are batch files.
+    */
+    def dxUtilPath = "${sdkDirectory.path}/build-tools/${buildToolsVersion}/dx.bat"
 
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
@@ -395,7 +409,13 @@ android {
 }
 
 private static File findJavaHome() {
-    String javaPath = System.getProperty("java.home")
+    /* WinOS Comp:
+    javaPath:
+    Set this variable for the location of your JDK path (Java version must be 1.8)
+    E.g.: ""C:\\Java\\jdk1.8.0_212"" or "C:\\Program Files\\Java\\jdk1.8.0_212" or "C:\\Program Files (x86)\\Java\\jdk1.8.0_212"
+    */
+
+    String javaPath = "C:\\Java\\jdk1.8.0_212"
     if (javaPath != null) {
         File javaBase = new File(javaPath)
         if (javaBase.exists()) {
