@@ -118,8 +118,6 @@
     "objFolder": "C:\\Users\\JulianBermudez\\Desktop\\Telegram\\TMessagesProj\\build\\intermediates\\ndkBuild\\afatDebug\\obj\\local",
     "variantName": "afatDebug",
     "validAbiList": [
-      "ARMEABI_V7A",
-      "ARM64_V8A",
       "X86",
       "X86_64"
     ]

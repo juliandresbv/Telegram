@@ -176,42 +176,19 @@ android {
 
     productFlavors {
         /* WinOS Comp:
-        Compilation CPU architectures:
+        Compilation CPU architectures (productFlavors):
         As a compilation optimization, it is recommended to block-comment those "flavors" that does
         NOT match the CPU architecture of your Android device (either physical or emulator device).
         (Googling the technical specifications of your device might give you a clue about the CPU
         architecture of your device).
         */
 
-        armv7 {
-            ndk {
-                abiFilters "armeabi-v7a"
-            }
-            ext {
-                abiVersionCode = 1
-            }
-        }
         x86 {
             ndk {
                 abiFilters "x86"
             }
             ext {
                 abiVersionCode = 2
-            }
-        }
-        armv7_SDK23 {
-            ndk {
-                abiFilters "armeabi-v7a"
-            }
-            sourceSets.debug {
-                manifest.srcFile 'config/debug/AndroidManifest_SDK23.xml'
-            }
-            sourceSets.release {
-                manifest.srcFile 'config/release/AndroidManifest_SDK23.xml'
-            }
-            minSdkVersion 23
-            ext {
-                abiVersionCode = 3
             }
         }
         x86_SDK23 {
@@ -229,38 +206,12 @@ android {
                 abiVersionCode = 4
             }
         }
-        arm64 {
-            ndk {
-                abiFilters "arm64-v8a"
-            }
-            ext {
-                abiVersionCode = 5
-            }
-        }
         x64 {
             ndk {
                 abiFilters "x86_64"
             }
             ext {
                 abiVersionCode = 6
-            }
-        }
-        arm64_SDK23 {
-            ndk {
-                abiFilters "arm64-v8a"
-            }
-            sourceSets.debug {
-                manifest.srcFile 'config/debug/AndroidManifest_SDK23.xml'
-            }
-            /*sourceSets.debugAsan {
-                manifest.srcFile 'config/debug/AndroidManifest_SDK23.xml'
-            }*/
-            sourceSets.release {
-                manifest.srcFile 'config/release/AndroidManifest_SDK23.xml'
-            }
-            minSdkVersion 23
-            ext {
-                abiVersionCode = 7
             }
         }
         x64_SDK23 {
@@ -292,6 +243,58 @@ android {
                 abiVersionCode = 9
             }
         }
+
+        /*
+        armv7 {
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
+            ext {
+                abiVersionCode = 1
+            }
+        }
+        armv7_SDK23 {
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
+            sourceSets.debug {
+                manifest.srcFile 'config/debug/AndroidManifest_SDK23.xml'
+            }
+            sourceSets.release {
+                manifest.srcFile 'config/release/AndroidManifest_SDK23.xml'
+            }
+            minSdkVersion 23
+            ext {
+                abiVersionCode = 3
+            }
+        }
+        arm64 {
+            ndk {
+                abiFilters "arm64-v8a"
+            }
+            ext {
+                abiVersionCode = 5
+            }
+        }
+        arm64_SDK23 {
+            ndk {
+                abiFilters "arm64-v8a"
+            }
+            sourceSets.debug {
+                manifest.srcFile 'config/debug/AndroidManifest_SDK23.xml'
+            }
+            //sourceSets.debugAsan {
+            //    manifest.srcFile 'config/debug/AndroidManifest_SDK23.xml'
+            //}
+            sourceSets.release {
+                manifest.srcFile 'config/release/AndroidManifest_SDK23.xml'
+            }
+            minSdkVersion 23
+            ext {
+                abiVersionCode = 7
+            }
+        }
+        */
     }
 
     defaultConfig.versionCode = 1947
@@ -402,7 +405,21 @@ android {
         externalNativeBuild {
             ndkBuild {
                 arguments "NDK_APPLICATION_MK:=jni/Application.mk", "APP_PLATFORM:=android-16", "--jobs=8"
+
+                /* WinOS Comp:
+                Native compilation CPU architectures (abiFilters):
+                As a compilation optimization, it is recommended to take out and comment those
+                "abiFilters" that does NOT match the CPU architecture of your Android device
+                (either physical or emulator device).
+                (Googling the technical specifications of your device might give you a clue about
+                the CPU architecture of your device).
+                Example
+                The original abiFilters variable is:
                 abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+                But, for x86 and x86_64 CPU architectures there should only required:
+                abiFilters "x86", "x86_64"
+                */
+                abiFilters "x86", "x86_64"
             }
         }
     }
@@ -412,7 +429,8 @@ private static File findJavaHome() {
     /* WinOS Comp:
     javaPath:
     Set this variable for the location of your JDK path (Java version must be 1.8)
-    E.g.: ""C:\\Java\\jdk1.8.0_212"" or "C:\\Program Files\\Java\\jdk1.8.0_212" or "C:\\Program Files (x86)\\Java\\jdk1.8.0_212"
+    E.g.: ""C:\\Java\\jdk1.8.0_212"" or "C:\\Program Files\\Java\\jdk1.8.0_212" or
+    "C:\\Program Files (x86)\\Java\\jdk1.8.0_212"
     */
 
     String javaPath = "C:\\Java\\jdk1.8.0_212"
